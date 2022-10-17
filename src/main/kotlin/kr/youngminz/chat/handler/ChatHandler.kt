@@ -32,5 +32,4 @@ class ChatHandler : TextWebSocketHandler() {
         list.remove(session)
         log.info("$session 클라이언트 접속 해제")
     }
-
 }

@@ -14,5 +14,4 @@ class ChatController {
         log.info("GET /chat")
         return "chat"
     }
-
 }

@@ -30,7 +30,7 @@ class RoomController(
     }
 
     @PostMapping(value = ["/room"])
-    fun create(@RequestParam name: String, rttr: RedirectAttributes) : String {
+    fun create(@RequestParam name: String, rttr: RedirectAttributes): String {
         log.info("# Create Chat Room, name: $name")
         rttr.addFlashAttribute("roomName", repository.createChatRoomDto(name))
         return "redirect:/chat/rooms"
@@ -41,5 +41,4 @@ class RoomController(
         log.info("# Get Chat Room, roomId : $roomId")
         model.addAttribute("room", repository.findRoomById(roomId))
     }
-
 }

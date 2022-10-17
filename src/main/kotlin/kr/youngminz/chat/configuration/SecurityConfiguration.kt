@@ -10,10 +10,5 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
-        http
-            .headers()
-            .frameOptions()
-            .sameOrigin()
     }
-
 }

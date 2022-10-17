@@ -1,7 +1,6 @@
 package kr.youngminz.chat.dto
 
 import org.springframework.web.socket.WebSocketSession
-import java.util.UUID
 
 var id = 1
 
