@@ -29,6 +29,7 @@
 </html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
 
 
 <script th:inline="javascript">
@@ -37,38 +38,38 @@
         const username = "hello";
 
         $("#disconn").on("click", (e) => {
-            websocket.close()
+            sockJs.close()
         })
 
         $("#button-send").on("click", (e) => {
             send();
         });
 
-        const websocket = new WebSocket("ws://localhost:8080/ws/chat");
+        var sockJs = new SockJS("http://localhost:8080/ws/chat");
 
-        websocket.onmessage = onMessage;
-        websocket.onopen = onOpen;
-        websocket.onclose = onClose;
-
+        sockJs.onmessage = onMessage;
+        sockJs.onopen = onOpen;
+        sockJs.onclose = onClose;
 
         function send() {
+
             let msg = document.getElementById("msg");
 
             console.log(username + ":" + msg.value);
-            websocket.send(username + ":" + msg.value);
+            sockJs.send(username + ":" + msg.value);
             msg.value = '';
         }
 
         //채팅창에서 나갔을 때
         function onClose(evt) {
             var str = username + ": 님이 방을 나가셨습니다.";
-            websocket.send(str);
+            sockJs.send(str);
         }
 
         //채팅창에 들어왔을 때
         function onOpen(evt) {
             var str = username + ": 님이 입장하셨습니다.";
-            websocket.send(str);
+            sockJs.send(str);
         }
 
         function onMessage(msg) {

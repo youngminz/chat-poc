@@ -13,7 +13,10 @@ class WebSocketConfiguration(
 ) : WebSocketConfigurer {
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(chatHandler, "ws/chat").setAllowedOrigins("*")
+        registry.addHandler(chatHandler, "ws/chat")
+            .setAllowedOrigins("http://localhost:8080")
+            .withSockJS()
+            .setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.js")
     }
 
 }
