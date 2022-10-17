@@ -18,6 +18,8 @@ class ChatRoomRepository {
     }
 
     fun createChatRoomDto(name: String): ChatRoomDto {
-        return chatRoomDtoMap.computeIfAbsent(name) { ChatRoomDto(it) }
+        val room = ChatRoomDto(name)
+        chatRoomDtoMap[room.roomId] = room
+        return room
     }
 }
