@@ -17,17 +17,15 @@ class RedisConfiguration {
     @Bean
     fun redisMessageListenerContainer(
         connectionFactory: RedisConnectionFactory,
-        listenerAdapter: MessageListenerAdapter,
+        subscriber: RedisSubscriber,
     ): RedisMessageListenerContainer {
         return RedisMessageListenerContainer().also {
             it.setConnectionFactory(connectionFactory)
-            it.addMessageListener(listenerAdapter, PatternTopic("/sub/chat/room/*"))
+            it.addMessageListener(
+                MessageListenerAdapter(subscriber),
+                PatternTopic("/sub/chat/room/*"),
+            )
         }
-    }
-
-    @Bean
-    fun listenerAdapter(subscriber: RedisSubscriber): MessageListenerAdapter {
-        return MessageListenerAdapter(subscriber, "onMessage")
     }
 
     @Bean
