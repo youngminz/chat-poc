@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
@@ -9,12 +9,12 @@
                 <h1>[[${room.name}]]</h1>
             </div>
             <div>
-                <div id="msgArea" class="col"></div>
+                <div class="col" id="msgArea"></div>
                 <div class="col-6">
                     <div class="input-group mb-3">
-                        <input type="text" id="msg" class="form-control">
+                        <input class="form-control" id="msg" type="text">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                            <button class="btn btn-outline-secondary" id="button-send" type="button">전송</button>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
 </html>
 
 <script th:inline="javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         var roomName = [[${room.name}]];
         var roomId = [[${room.roomId}]];
@@ -46,7 +46,7 @@
         var stomp = Stomp.over(sockJs);
 
         //2. connection이 맺어지면 실행
-        stomp.connect({}, function (){
+        stomp.connect({}, function () {
             console.log("STOMP Connection")
 
             //4. subscribe(path, callback)으로 메세지를 받을 수 있음
@@ -57,14 +57,13 @@
                 var writer = content.writer;
                 var str = '';
 
-                if(writer === username){
+                if (writer === username) {
                     str = "<div class='col-6'>";
                     str += "<div class='alert alert-secondary'>";
                     str += "<b>" + writer + " : " + message + "</b>";
                     str += "</div></div>";
                     // $("#msgArea").append(str);
-                }
-                else{
+                } else {
                     str = "<div class='col-6'>";
                     str += "<div class='alert alert-warning'>";
                     str += "<b>" + writer + " : " + message + "</b>";
@@ -79,7 +78,7 @@
             stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
         });
 
-        $("#button-send").on("click", function(e) {
+        $("#button-send").on("click", function (e) {
             var msg = document.getElementById("msg");
 
             console.log(username + ":" + msg.value);
